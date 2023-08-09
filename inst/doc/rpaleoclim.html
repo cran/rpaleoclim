@@ -599,7 +599,7 @@ for <code>&quot;cur&quot;</code> and <code>&quot;lgm&quot;</code>)</li>
 <h2>Retrieving data</h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(rpaleoclim)</span>
 <span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">library</span>(terra)</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt; terra 1.7.29</span></span></code></pre></div>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt; terra 1.7.39</span></span></code></pre></div>
 <p>Use <code>paleoclim()</code> to download paleoclimate data from
 PaleoClim, specifying the desired time period (see above) and
 resolution. For example, to download data for the Late Holocene
@@ -620,8 +620,8 @@ resolution. For example, to download data for the Late Holocene
 <p>The result is a <code>SpatRaster</code> object with up to 19 layers
 containing reconstructed values of the standard “bioclimatic variables”
 (see above) for this period. Consult the <code>terra</code>
-documentation for information on <a href="https://rspatial.org/spatial-terra/8-rastermanip.html">working
-with spatial raster data</a> in R.</p>
+documentation for information on <a href="https://rspatial.org/spatial/4-rasterdata.html">working with
+spatial raster data</a> in R.</p>
 <p>By default, <code>paleoclim()</code> loads the entire downloaded
 raster into R, i.e. the whole globe. You can conveniently crop it to a
 specific (rectangular) region of interest with the <code>region</code>
@@ -680,25 +680,31 @@ is being downloaded or read from a cached file.</p>
 manipulating spatial data. Previous versions used <a href="https://rspatial.org/raster/">raster</a> and <code>rgdal</code>,
 which <a href="https://r-spatial.org/r/2022/04/12/evolution.html">are
 now deprecated</a>. To use the old <code>raster</code> types, you will
-need to install the optional dependencies <code>raster</code> and
-<code>rgdal</code> (like <code>terra</code>, these require GDAL and PROJ
-system libraries):</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">&quot;rgdal&quot;</span>, <span class="st">&quot;raster&quot;</span>))</span></code></pre></div>
+need to install the optional dependency <code>raster</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="fu">c</span>(<span class="st">&quot;raster&quot;</span>))</span></code></pre></div>
 <p>Then pass <code>as = &quot;raster&quot;</code> to <code>paleoclim()</code> or
 <code>load_paleoclim()</code> to return the data as a
 <code>RasterStack</code> object instead of a
 <code>SpatRaster</code>.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">paleoclim</span>(<span class="st">&quot;lh&quot;</span>, <span class="st">&quot;10m&quot;</span>, <span class="at">as =</span> <span class="st">&quot;raster&quot;</span>)</span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co">#&gt; Warning: `as = &quot;raster&quot;` is deprecated and will be removed in future versions of rpaleoclim</span></span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt; This warning is displayed once per session.</span></span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt; class      : RasterStack </span></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt; dimensions : 1044, 2160, 2255040, 19  (nrow, ncol, ncell, nlayers)</span></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt; resolution : 0.1666667, 0.1666667  (x, y)</span></span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt; extent     : -180.0001, 179.9999, -90.00014, 83.99986  (xmin, xmax, ymin, ymax)</span></span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt; crs        : +proj=longlat +datum=WGS84 +no_defs </span></span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt; names      : bio_1, bio_10, bio_11, bio_12, bio_13, bio_14, bio_15, bio_16, bio_17, bio_18, bio_19, bio_2, bio_3, bio_4, bio_5, ... </span></span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt; min values :  -526,   -334,   -656,      0,      0,      0,      0,      0,      0,      0,      0,     6,     3,   116,  -292, ... </span></span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt; max values :   314,    385,    288,   9696,   2399,    651,    215,   6321,   2025,   5128,   3860,   169,    90, 24243,   481, ...</span></span></code></pre></div>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="co">#&gt; The legacy packages maptools, rgdal, and rgeos, underpinning the sp package,</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="co">#&gt; which was just loaded, will retire in October 2023.</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt; Please refer to R-spatial evolution reports for details, especially</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt; https://r-spatial.org/r/2023/05/15/evolution4.html.</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt; It may be desirable to make the sf package available;</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt; package maintainers should consider adding sf to Suggests:.</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt; The sp package is now running under evolution status 2</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt;      (status 2 uses the sf package in place of rgdal)</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt; Warning: `as = &quot;raster&quot;` is deprecated and will be removed in future versions of rpaleoclim</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt; This warning is displayed once per session.</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co">#&gt; class      : RasterStack </span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co">#&gt; dimensions : 1044, 2160, 2255040, 19  (nrow, ncol, ncell, nlayers)</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#&gt; resolution : 0.1666667, 0.1666667  (x, y)</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt; extent     : -180.0001, 179.9999, -90.00014, 83.99986  (xmin, xmax, ymin, ymax)</span></span>
+<span id="cb7-16"><a href="#cb7-16" tabindex="-1"></a><span class="co">#&gt; crs        : +proj=longlat +datum=WGS84 +no_defs </span></span>
+<span id="cb7-17"><a href="#cb7-17" tabindex="-1"></a><span class="co">#&gt; names      : bio_1, bio_10, bio_11, bio_12, bio_13, bio_14, bio_15, bio_16, bio_17, bio_18, bio_19, bio_2, bio_3, bio_4, bio_5, ... </span></span>
+<span id="cb7-18"><a href="#cb7-18" tabindex="-1"></a><span class="co">#&gt; min values :  -526,   -334,   -656,      0,      0,      0,      0,      0,      0,      0,      0,     6,     3,   116,  -292, ... </span></span>
+<span id="cb7-19"><a href="#cb7-19" tabindex="-1"></a><span class="co">#&gt; max values :   314,    385,    288,   9696,   2399,    651,    215,   6321,   2025,   5128,   3860,   169,    90, 24243,   481, ...</span></span></code></pre></div>
 <p>Please note that <code>raster</code> support will be removed in a
 future version of <code>rpaleoclim</code>.</p>
 </div>

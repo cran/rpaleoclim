@@ -71,7 +71,7 @@ zipfile <- system.file("testdata", "LH_v1_10m_cropped.zip",
 load_paleoclim(zipfile)
 
 ## ----install-raster, eval=FALSE-----------------------------------------------
-#  install.packages(c("rgdal", "raster"))
+#  install.packages(c("raster"))
 
 ## ----eg-raster----------------------------------------------------------------
 paleoclim("lh", "10m", as = "raster")
